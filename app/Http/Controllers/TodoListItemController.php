@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Response;
 class TodoListItemController extends Controller
 {
 
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        return Response::json(TodoListItem::all());
+        return Response::json($request->user()->todoListItems);
     }
 
     /**
@@ -23,10 +23,7 @@ class TodoListItemController extends Controller
      */
     public function store(Request $request)
     {
-
-        TodoListItem::query()->create(["description" => $request->description]);
-
-
+        $request->user()->todoListItems()->create(["description" => $request->input('description')]);
     }
 
     /**
