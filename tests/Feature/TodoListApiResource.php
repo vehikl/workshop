@@ -20,4 +20,13 @@ class TodoListApiResource extends TestCase
         $this->assertDatabaseHas(TodoListItem::class, ['description' => $newListItem]);
     }
 
+    public function test_get_list_item()
+    {
+        $existingTodoListItems = TodoListItem::factory()->times(20)->create();
+
+        $this->get(route('todo-list-items.index'))
+            ->assertSuccessful()
+            ->assertJson($existingTodoListItems->toArray());
+    }
+
 }
