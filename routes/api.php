@@ -18,5 +18,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('todo-list-items', \App\Http\Controllers\TodoListItemController::class)->only('index', 'store');
-
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('todo-list-items', \App\Http\Controllers\TodoListItemController::class)
+        ->only('index', 'store');
+});

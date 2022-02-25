@@ -3,18 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\TodoListItem;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 class TodoListItemController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function index(): JsonResponse
     {
-        return TodoListItem::all();
+        return Response::json(TodoListItem::all());
     }
 
     /**
