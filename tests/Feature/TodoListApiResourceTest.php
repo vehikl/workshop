@@ -11,7 +11,7 @@ class TodoListApiResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_guest_can_create_a_list_item()
+    public function test_user_can_create_a_list_item()
     {
         $existingUser = User::factory()->create();
         $newListItem = 'Wash clothes';
