@@ -32,6 +32,26 @@ class TodoListApiResourceTest extends TestCase
             ->assertJson($existingTodoListItems->toArray());
     }
 
+    public function test_a_todo_item_given_follows_the_expected_contract_with_the_frontend()
+    {
+        $expectedContract = [
+            "id",
+            "user_id",
+            "description",
+            "is_done",
+            "created_at",
+            "updated_at"
+        ];
+
+        $existingUser = User::factory()->has(TodoListItem::factory()->count(20))->create();
+
+        $this->actingAs($existingUser)->getJson(route('todo-list-items.index'))
+            ->assertSuccessful()
+            ->assertJsonStructure([
+                '*' => $expectedContract
+            ]);
+    }
+
 
     public function test_a_user_can_only_see_their_own_todo_list_items()
     {
