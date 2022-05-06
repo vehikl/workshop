@@ -16,7 +16,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-});
+})->name('auth.me');
+
+Route::post('/login', function (Request $request) {
+
+    if (auth()->attempt($request->all())) {
+        $tokenName = 'todo-list-authentication';
+        $token = $request->user()->createToken($tokenName);
+
+        return ['token' => $token->plainTextToken];
+    }
+
+    return [];
+})->name('auth.login');
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('todo-list-items', \App\Http\Controllers\TodoListItemController::class)
